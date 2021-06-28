@@ -1,8 +1,11 @@
 <?php
 namespace AnyDownloader\PinterestDownloader;
 
+use AnyDownloader\DownloadManager\Exception\CanNotMapGivenURLToResourceItemException;
 use AnyDownloader\DownloadManager\Exception\NothingToExtractException;
+use AnyDownloader\DownloadManager\Exception\NotValidUrlException;
 use AnyDownloader\DownloadManager\Handler\BaseHandler;
+use AnyDownloader\DownloadManager\Model\Attribute\TextAttribute;
 use AnyDownloader\DownloadManager\Model\FetchedResource;
 use AnyDownloader\DownloadManager\Model\ResourceItem\ResourceItemFactory;
 use AnyDownloader\DownloadManager\Model\URL;
@@ -16,7 +19,9 @@ final class PinterestHandler extends BaseHandler
      * @var string[]
      */
     protected $urlRegExPatterns = [
-        '/(\/\/|www\.)pinterest\.[a-zA-Z]+\/pin\/[0-9]+/s'
+        'short' => '/(\/\/|www\.)pin\.[a-zA-Z]+\/[a-zA-Z0-9]+/s',
+        'full' => '/(\/\/|www\.)pinterest\.[a-zA-Z]+\/pin\/[0-9]+/s',
+        'full_dirty' => '/(\/\/|www\.)pinterest\.[a-zA-Z]+\/pin\/[0-9]+\/(.*)/s'
     ];
 
     /**
@@ -35,12 +40,21 @@ final class PinterestHandler extends BaseHandler
 
     /**
      * @param URL $url
-     * @return PinterestFetchedResource
+     * @return FetchedResource
+     * @throws NotValidUrlException
      * @throws NothingToExtractException
+     * @throws CanNotMapGivenURLToResourceItemException
      */
     public function fetchResource(URL $url): FetchedResource
     {
-        $crawler = $this->client->request('GET', $url->getValue());
+        $realUrl = $this->getRealURL($url);
+        preg_match('/\/pin\/[0-9]+/s', $realUrl->getValue(), $pinId);
+
+        if (empty($pinId)) {
+            throw new NotValidUrlException();
+        }
+        $realUrl = 'https://pinterest.com' . $pinId[0];
+        $crawler = $this->client->request('GET', $realUrl);
         $jsons = [];
 
         if (!preg_match(
@@ -56,9 +70,10 @@ final class PinterestHandler extends BaseHandler
             throw new NothingToExtractException(json_last_error_msg());
         }
         $pinterestResource = new PinterestFetchedResource($url);
+        $data = $data->resourceResponses[0]->response->data;
 
-        if ($images = $data->resourceResponses[0]->response->data->images) {
-            foreach ($images as $image) {
+        if ($data->images) {
+            foreach ($data->images as $image) {
                 $imageResource = ResourceItemFactory::fromURL(
                     URL::fromString($image->url), $image->width . 'x' . $image->height
                 );
@@ -69,8 +84,28 @@ final class PinterestHandler extends BaseHandler
             }
         }
 
-        $author = PinterestAuthorAttribute::fromPinterestOriginPinnerStdObj($data->resourceResponses[0]->response->data->pinner);
-        $pinterestResource->addAttribute($author);
+        if ($data->videos && $data->videos->video_list) {
+            foreach ($data->videos->video_list as $video) {
+                $videoResource = ResourceItemFactory::fromURL(
+                    URL::fromString($video->url), $video->width . 'x' . $video->height
+                );
+                if ($videoResource) {
+                    $pinterestResource->addItem($videoResource);
+                }
+            }
+            if (isset($videoResource)) {
+                $pinterestResource->setVideoPreview($videoResource);
+            }
+        }
+
+        if ($data->pinner) {
+            $author = PinterestAuthorAttribute::fromPinterestOriginPinnerStdObj($data->pinner);
+            $pinterestResource->addAttribute($author);
+        }
+
+        if ($data->description) {
+            $pinterestResource->addAttribute(new TextAttribute($data->description));
+        }
 
         return $pinterestResource;
     }
