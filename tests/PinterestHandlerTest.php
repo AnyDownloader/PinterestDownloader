@@ -1,5 +1,5 @@
 <?php
-namespace AnyDownloader\RedGifsDownloader\Tests;
+namespace AnyDownloader\PinterestDownloader\Tests;
 
 use AnyDownloader\DownloadManager\Model\URL;
 use AnyDownloader\PinterestDownloader\PinterestHandler;
