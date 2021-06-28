@@ -1,7 +1,6 @@
 <?php
 namespace AnyDownloader\PinterestDownloader;
 
-use AnyDownloader\DownloadManager\Exception\CanNotMapGivenURLToResourceItemException;
 use AnyDownloader\DownloadManager\Exception\NothingToExtractException;
 use AnyDownloader\DownloadManager\Exception\NotValidUrlException;
 use AnyDownloader\DownloadManager\Handler\BaseHandler;
@@ -43,7 +42,6 @@ final class PinterestHandler extends BaseHandler
      * @return FetchedResource
      * @throws NotValidUrlException
      * @throws NothingToExtractException
-     * @throws CanNotMapGivenURLToResourceItemException
      */
     public function fetchResource(URL $url): FetchedResource
     {
@@ -69,7 +67,7 @@ final class PinterestHandler extends BaseHandler
         if (json_last_error()) {
             throw new NothingToExtractException(json_last_error_msg());
         }
-        $pinterestResource = new PinterestFetchedResource($url);
+        $resource = new PinterestFetchedResource($url);
         $data = $data->resourceResponses[0]->response->data;
 
         if ($data->images) {
@@ -77,10 +75,10 @@ final class PinterestHandler extends BaseHandler
                 $imageResource = ResourceItemFactory::fromURL(
                     URL::fromString($image->url), $image->width . 'x' . $image->height
                 );
-                $pinterestResource->addItem($imageResource);
+                $resource->addItem($imageResource);
             }
             if (isset($imageResource)) {
-                $pinterestResource->setImagePreview($imageResource);
+                $resource->setImagePreview($imageResource);
             }
         }
 
@@ -90,24 +88,24 @@ final class PinterestHandler extends BaseHandler
                     URL::fromString($video->url), $video->width . 'x' . $video->height
                 );
                 if ($videoResource) {
-                    $pinterestResource->addItem($videoResource);
+                    $resource->addItem($videoResource);
                 }
             }
             if (isset($videoResource)) {
-                $pinterestResource->setVideoPreview($videoResource);
+                $resource->setVideoPreview($videoResource);
             }
         }
 
         if ($data->pinner) {
             $author = PinterestAuthorAttribute::fromPinterestOriginPinnerStdObj($data->pinner);
-            $pinterestResource->addAttribute($author);
+            $resource->addAttribute($author);
         }
 
         if ($data->description) {
-            $pinterestResource->addAttribute(new TextAttribute($data->description));
+            $resource->addAttribute(new TextAttribute($data->description));
         }
 
-        return $pinterestResource;
+        return $resource;
     }
 
 }
