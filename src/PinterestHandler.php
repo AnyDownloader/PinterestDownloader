@@ -78,8 +78,6 @@ final class PinterestHandler extends BaseHandler
                     URL::fromString($image->url), $image->width . 'x' . $image->height
                 );
                 $resource->addItem($imageResource);
-            }
-            if (isset($imageResource)) {
                 $resource->setImagePreview($imageResource);
             }
         }
