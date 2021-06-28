@@ -5,7 +5,6 @@ use AnyDownloader\DownloadManager\Model\URL;
 use AnyDownloader\PinterestDownloader\PinterestHandler;
 use Goutte\Client;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\BrowserKit\HttpBrowser;
 
 class PinterestHandlerTest extends TestCase
 {

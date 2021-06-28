@@ -4,6 +4,7 @@ namespace AnyDownloader\PinterestDownloader;
 use AnyDownloader\DownloadManager\Exception\NothingToExtractException;
 use AnyDownloader\DownloadManager\Exception\NotValidUrlException;
 use AnyDownloader\DownloadManager\Handler\BaseHandler;
+use AnyDownloader\DownloadManager\Model\Attribute\IdAttribute;
 use AnyDownloader\DownloadManager\Model\Attribute\TextAttribute;
 use AnyDownloader\DownloadManager\Model\FetchedResource;
 use AnyDownloader\DownloadManager\Model\ResourceItem\ResourceItemFactory;
@@ -45,16 +46,17 @@ final class PinterestHandler extends BaseHandler
      */
     public function fetchResource(URL $url): FetchedResource
     {
-        $realUrl = $this->getRealURL($url);
+        $realUrl = clone $url;
+        $realUrl->followLocation();
         preg_match('/\/pin\/[0-9]+/s', $realUrl->getValue(), $pinId);
 
         if (empty($pinId)) {
             throw new NotValidUrlException();
         }
+
         $realUrl = 'https://pinterest.com' . $pinId[0];
         $crawler = $this->client->request('GET', $realUrl);
         $jsons = [];
-
         if (!preg_match(
             '/<script id=\"initial-state\" type=\"application\/json\">(.*)<\/script><script id=\"pc-state/s',
             $crawler->html(),
@@ -89,11 +91,13 @@ final class PinterestHandler extends BaseHandler
                 );
                 if ($videoResource) {
                     $resource->addItem($videoResource);
+                    $resource->setVideoPreview($videoResource);
                 }
             }
-            if (isset($videoResource)) {
-                $resource->setVideoPreview($videoResource);
-            }
+        }
+
+        if ($data->id) {
+           $resource->addAttribute(new IdAttribute($data->id));
         }
 
         if ($data->pinner) {
