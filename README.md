@@ -37,9 +37,18 @@ Array
             [mime_type] => image/png
         )
 
-    [preview_video] =>
+    [preview_video] => Array
+        (
+            [type] => video
+            [format] => mp4
+            [quality] => 720x1280
+            [url] => https://v.pinimg.com/videos/mc/720p/5b/f2/b6/5bf2b646c97ae208a0287ae25d58b1a0.mp4
+            [mime_type] => video/mp4
+        )
+
     [attributes] => Array
         (
+            [id] => 659495939164206993
             [author] => Array
                 (
                     [id] => 659496076591524584
@@ -53,94 +62,102 @@ Array
 
     [items] => Array
         (
-            [0] => Array
+            [image] => Array
                 (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 60x60
-                    [url] => https://i.pinimg.com/60x60/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
+                    [0] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 60x60
+                            [url] => https://i.pinimg.com/60x60/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [1] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 136x136
+                            [url] => https://i.pinimg.com/136x136/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [2] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 170x302
+                            [url] => https://i.pinimg.com/170x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [3] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 236x419
+                            [url] => https://i.pinimg.com/236x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [4] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 474x842
+                            [url] => https://i.pinimg.com/474x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [5] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 564x1002
+                            [url] => https://i.pinimg.com/564x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [6] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 720x1280
+                            [url] => https://i.pinimg.com/736x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [7] => Array
+                        (
+                            [type] => image
+                            [format] => jpg
+                            [quality] => 600x315
+                            [url] => https://i.pinimg.com/600x315/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
+                            [mime_type] => image/jpg
+                        )
+
+                    [8] => Array
+                        (
+                            [type] => image
+                            [format] => png
+                            [quality] => 720x1280
+                            [url] => https://i.pinimg.com/originals/f2/ce/36/f2ce36b176a836dc929e592856751ded.png
+                            [mime_type] => image/png
+                        )
+
                 )
 
-            [1] => Array
+            [video] => Array
                 (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 136x136
-                    [url] => https://i.pinimg.com/136x136/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
+                    [0] => Array
+                        (
+                            [type] => video
+                            [format] => mp4
+                            [quality] => 720x1280
+                            [url] => https://v.pinimg.com/videos/mc/720p/5b/f2/b6/5bf2b646c97ae208a0287ae25d58b1a0.mp4
+                            [mime_type] => video/mp4
+                        )
 
-            [2] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 170x302
-                    [url] => https://i.pinimg.com/170x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [3] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 236x419
-                    [url] => https://i.pinimg.com/236x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [4] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 474x842
-                    [url] => https://i.pinimg.com/474x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [5] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 564x1002
-                    [url] => https://i.pinimg.com/564x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [6] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 720x1280
-                    [url] => https://i.pinimg.com/736x/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [7] => Array
-                (
-                    [type] => image
-                    [format] => jpg
-                    [quality] => 600x315
-                    [url] => https://i.pinimg.com/600x315/f2/ce/36/f2ce36b176a836dc929e592856751ded.jpg
-                    [mime_type] => image/jpg
-                )
-
-            [8] => Array
-                (
-                    [type] => image
-                    [format] => png
-                    [quality] => 720x1280
-                    [url] => https://i.pinimg.com/originals/f2/ce/36/f2ce36b176a836dc929e592856751ded.png
-                    [mime_type] => image/png
-                )
-
-            [9] => Array
-                (
-                    [type] => video
-                    [format] => mp4
-                    [quality] => 720x1280
-                    [url] => https://v.pinimg.com/videos/mc/720p/5b/f2/b6/5bf2b646c97ae208a0287ae25d58b1a0.mp4
-                    [mime_type] => video/mp4
                 )
 
         )
