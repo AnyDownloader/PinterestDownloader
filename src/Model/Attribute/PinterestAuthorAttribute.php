@@ -17,8 +17,8 @@ final class PinterestAuthorAttribute extends AuthorAttribute
     public static function fromPinterestOriginPinnerStdObj(\stdClass $user): PinterestAuthorAttribute
     {
         $id = $user->id ?? '';
-        $fullName = $user->full_name ?? '';
-        $nickname = $user->username ?? '';
+        $fullName = html_entity_decode($user->full_name) ?? '';
+        $nickname = html_entity_decode($user->username) ?? '';
         try {
             $avatar = URL::fromString($user->image_medium_url);
         } catch (\Exception $e) {

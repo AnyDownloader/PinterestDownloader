@@ -4,8 +4,10 @@ namespace AnyDownloader\PinterestDownloader;
 use AnyDownloader\DownloadManager\Exception\NothingToExtractException;
 use AnyDownloader\DownloadManager\Exception\NotValidUrlException;
 use AnyDownloader\DownloadManager\Handler\BaseHandler;
+use AnyDownloader\DownloadManager\Model\Attribute;
 use AnyDownloader\DownloadManager\Model\Attribute\IdAttribute;
 use AnyDownloader\DownloadManager\Model\Attribute\TextAttribute;
+use AnyDownloader\DownloadManager\Model\Attribute\TitleAttribute;
 use AnyDownloader\DownloadManager\Model\FetchedResource;
 use AnyDownloader\DownloadManager\Model\ResourceItem\ResourceItemFactory;
 use AnyDownloader\DownloadManager\Model\URL;
@@ -103,8 +105,12 @@ final class PinterestHandler extends BaseHandler
             $resource->addAttribute($author);
         }
 
+        if ($data->title) {
+            $resource->addAttribute(new TitleAttribute(html_entity_decode($data->title)));
+        }
+
         if ($data->description) {
-            $resource->addAttribute(new TextAttribute($data->description));
+            $resource->addAttribute(new TextAttribute(html_entity_decode($data->description)));
         }
 
         return $resource;
