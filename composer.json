@@ -22,7 +22,7 @@
   "require": {
     "php": ">=7.2.5",
     "any-downloader/download-manager": "*",
-    "fabpot/goutte": "dev-master",
+    "fabpot/goutte": "*",
     "ext-json": "*"
   },
   "require-dev": {
